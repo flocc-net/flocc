@@ -57,7 +57,7 @@ at the end of Chapter 5 of this PhD thesis. Furthermore, the current DDL type in
 algorithm (in Compiler.Types2) needs to be checked to make sure it properly conforms to the 
 one given in Chapter 5. In particular, the normalization function must implement the
 down-arrow algorithm in Chapter 5. If you are interested in forking, using, adapting
-the code, please do get in touch by emailing developer@flocc.net.
+the code, please do get in touch by emailing developer at flocc dot net.
 
 More information:
 For more information please see http://www.flocc.net/ and particularly

@@ -1,0 +1,29 @@
+TODO:
+----------------
+13/05/2015
+
+This code was developed for a PhD thesis (see http://www.flocc.net/thesis/), rather than for public use, and so is a very preliminary proof of concept.
+If you are interested in forking, using, adapting the code, please do get in touch by emailing developer@flocc.net.
+
+- Currently no Main method/executuable exists that runs the code generator
+  as it would be run by a real user. Instead, various test programs exist
+  in Compiler.Tests, which test different aspects of the code.
+  Therefore one should Implement new main method to call 
+  the code generator to actually search for and
+  generate code (rather than compare optimization search algorithms).
+  One of the genetic searches in the Pffb test should be used for this.
+
+- More code generation templates need to be implemented for the back-end.
+  In particular templates are needed for large maps that won't fit in memory
+  and for array-based combinator functions.
+
+- The redistribution insertion algorithm needs to be fixed (currently
+  show, and in an incosistant state - half reimplemented. This means
+  fixing Compiler.Planner.InsertCasts. This needs to be re-implemented to fully
+  implement algorithm 2 presented at the end of Chapter 5 of the PhD thesis. 
+
+- The current DDL type inference algorithm (used by InsertCasts etc, 
+  in Compiler.Types2) needs to be checked
+  to make sure it properly conforms to the one given in Chapter 5. In particular, the
+  normalization function must implement the down-arrow algorithm in Chapter 5.
+

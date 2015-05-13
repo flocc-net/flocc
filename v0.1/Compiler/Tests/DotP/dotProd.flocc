@@ -1,0 +1,10 @@
+let dotp = \(A,B) -> (
+  let AB = mapList (mulf, zip (A,B)) in
+  reduceList (addf, 0.0, AB)
+) in printFloat (dotp ((readList (genFloatList 100000000)), genFloatList 200000000))
+
+--let A = genFloatList 200000000 in
+--let B = genFloatList 100000000 in
+--let AB = mapList (mulf, zipVLists (A,B)) in
+--let R = reduceList (addf, 0.0, AB) in
+--  printFloat R

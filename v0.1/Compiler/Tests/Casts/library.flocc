@@ -1,0 +1,6 @@
+let id = \x -> x in
+let fst = \(x,y) -> x in
+let snd = \(x,y) -> y in
+let dup = \x -> (x,x) in
+let sqrf = \x -> mulf (x,x) in
+let sqri = \x -> muli (x,x) in

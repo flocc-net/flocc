@@ -1,0 +1,27 @@
+(let axes = 
+  (let (a, b) = ((intRangeSMap1 (-20, 10, 1)), (intRangeSMap1 (-10, 10, 1))) 
+  in (crossVMaps11 (a, b))) 
+
+in (let set = (mapSMap1 (
+  (\((x, y), _) -> ((x, y), (
+    let (x0, y0) = ((divf ((intToFloat x), 10.0)), (divf ((intToFloat y), 10.0))) in 
+    (let (_, _, d) = (loop ((\((x, y), (x2, y2), d) -> (
+                                     let (x2', y2') = ((mulf (x, x)), (mulf (y, y))) in 
+                                    (let x' = (addf ((subf (x2', y2')), x0)) in 
+                                    (let y' = (mulf ((mulf (2.0, x)), (mulf (y, y0)))) in 
+                                    (let d' = (addi (d, 1)) in ((x', y'), (x2', y2'), d')))))), 
+                            (\((x, y), (x2, y2), d) -> (and ((lti (d, 1000)), (ltef ((addf (x2, x2)), 4.0))))), 
+                            ((0.0, 0.0), (0.0, 0.0), 0))) 
+     in (ifFun ((gtei (d, 1000)), (\_ -> 0), (\_ -> d))))))
+  ), axes)) in (printSMap set)))
+
+
+(let axes = 
+  (let (a, b) = ((intRangeSMap1 (-20, 10, 1)), (intRangeSMap1 (-10, 10, 1))) 
+  in (crossVMaps11 (a, (repartVMap4 b)))) 
+ in 
+   (let set = 
+     (mapSMap1 (
+       (\((x, y), _) -> ((x, y), (
+         let (x0, y0) = ((divf ((intToFloat x), 10.0)), (divf ((intToFloat y), 10.0))) 
+         in (let (_, _, d) = (loop ((\((x, y), (x2, y2), d) -> (let (x2', y2') = ((mulf (x, x)), (mulf (y, y))) in (let x' = (addf ((subf (x2', y2')), x0)) in (let y' = (mulf ((mulf (2.0, x)), (mulf (y, y0)))) in (let d' = (addi (d, 1)) in ((x', y'), (x2', y2'), d')))))), (\((x, y), (x2, y2), d) -> (and ((lti (d, 1000)), (ltef ((addf (x2, x2)), 4.0))))), ((0.0, 0.0), (0.0, 0.0), 0))) in (ifFun ((gtei (d, 1000)), (\_ -> 0), (\_ -> d))))))), (readVMap (sortVMap (repartVMap4 axes))))) in (printSMap set)))

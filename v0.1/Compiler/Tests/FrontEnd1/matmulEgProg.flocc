@@ -1,0 +1,11 @@
+let matmul = (\(A,B) -> 
+  -- zip all combinations of
+  -- rows from A and cols from B
+  let R1 = eqJoinArr (snd, fst A, B) in
+  -- multiply values from A and B
+  let R2 = mapArrInv (id, mulf, id, R1) in
+  -- group by dest & sum-reduce
+  let R3 = groupReduceArr (
+    \((ai,aj),(bi,bj)) -> (ai,bj), 
+    snd, addf, R2) in R3) 
+in matmul (genSqMatrix 1000, genSqMatrix 1000)

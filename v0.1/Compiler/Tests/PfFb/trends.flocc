@@ -1,0 +1,11 @@
+let trends = (\D -> -- :: List (Int, List Int)
+  -- make events
+  let events = flatMapList (\(hr,words) -> mapList (\w -> (hr,w), words), D) in
+  -- count events
+  let counts = groupReduce (id, \_ -> 1, addi, events) in
+  -- sort in descending order
+  let counts' = sortDesc (id, toList counts) in
+  -- take top N
+  take (N, counts')) in
+-- run on random data
+trends (genData 20000000)

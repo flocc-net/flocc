@@ -1,0 +1,13 @@
+-- simple triangle enumeration
+let cardDStream = \s -> reduceDStream (\_ -> 1, addi, s) in
+let fstfst = \((x,_),_) -> x in
+let sndfst = \((_,x),_) -> x in
+let E = loadIntPairDStream () in
+let edges = sortDVecMap (dStreamToDVecMap (mapDStream2 (\((v1,v2),_) -> if lti (v1,v2) then ((v1,v2),()) else ((v2,v1),()), E))) in -- Map (Int,Int) ()
+let angles = dVecMapToDStreamLocal (dStreamToDVecMap (allPairsDVecMap (fstfst, edges))) in -- Map ((Int,Int),(Int,Int)) ((),())
+let triangles = eqJoinDStreamDVecMap (sndfst, fst, angles, edges) in -- Map (((Int,Int),(Int,Int)),(Int,Int)) (((),()),())
+printInt (cardDStream (mapDStream2 (\((((v1,_),_),(v2,v3)),_) -> ((v1,v2,v3),()), triangles)))
+
+-- programming mpi version
+-- 5/2/14: 16:41 - 17:04 designing mpi version based on flocc algorithm above
+-- 6/2/14: 9:50 - ... can't decide on collection for edges, sorted file/sorted vector/map/hash map

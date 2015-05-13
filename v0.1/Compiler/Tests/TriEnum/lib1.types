@@ -1,0 +1,72 @@
+id :: a -> a
+eq :: (a, a) -> Bool
+fst :: (a, b) -> a
+snd :: (a, b) -> b
+dup :: a -> (a, a)
+
+not :: Bool -> Bool
+and :: (Bool, Bool) -> Bool
+or :: (Bool, Bool) -> Bool
+
+addi :: (Int, Int) -> Int
+subi :: (Int, Int) -> Int
+muli :: (Int, Int) -> Int
+divi :: (Int, Int) -> Int
+modi :: (Int, Int) -> Int
+mini :: (Int, Int) -> Int
+maxi :: (Int, Int) -> Int
+negi :: Int -> Int
+
+eqi :: (Int, Int) -> Bool
+gti :: (Int, Int) -> Bool
+gtei :: (Int, Int) -> Bool
+lti :: (Int, Int) -> Bool
+ltei :: (Int, Int) -> Bool
+
+divf :: (Float, Float) -> Float
+mulf :: (Float, Float) -> Float
+addf :: (Float, Float) -> Float
+subf :: (Float, Float) -> Float
+minf :: (Float, Float) -> Float
+maxf :: (Float, Float) -> Float
+negf :: Float -> Float
+randf :: Null -> Float
+sqrt :: Float -> Float
+
+eqf :: (Float, Float) -> Bool
+gtf :: (Float, Float) -> Bool
+gtef :: (Float, Float) -> Bool
+ltf :: (Float, Float) -> Bool
+ltef :: (Float, Float) -> Bool
+
+intToFloat :: Int -> Float
+floatToInt :: Float -> Int
+
+ifFun :: (Bool, () -> a, () -> a) -> a
+
+loadIntPairDStream :: () -> DMap Stm (Int,Int) () FNull FId dim0 mdim
+
+mapDStream1 (mf,_) :: ((k,v) -> (k',v'), DMap Stm k v (FSeq sf mf) (FSeq pf mf) dim0 mdim) -> DMap Stm k' v' sf pf dim0 mdim
+
+mapDStream2 :: ((k,v) -> (k',v'), DMap Stm k v sf pf dim0 mdim) -> DMap Stm k' v' FNull FId dim0 mdim
+
+dStreamToDVecMap :: DMap Stm k v sf pf dim0 mdim -> DMap Vec k v sf FFst dim0 mdim
+
+dStreamToDVecMapLocal :: DMap Stm k v sf FFst dim0 mdim -> DMap Vec k v sf FFst dim0 mdim
+
+sortDVecMap :: DMap Vec k v sf1 pf dim0 mdim -> DMap Vec k v sf2 pf dim0 mdim
+
+dVecMapToDStreamLocal :: DMap Vec k v sf pf dim0 mdim -> DMap Stm k v sf pf dim0 mdim
+
+allPairsDVecMap (f,_) :: ((k1,v1) -> k, DMap Vec k1 v1 f f dim0 mdim) -> DMap Stm (k1,k1) (v1,v1) (FDup (FSeq f FLft) (FSeq f FRht)) (FBoth (FSeq f FLft) (FSeq f FRht)) dim0 mdim 
+
+eqJoinDStreamDVecMap (f1,f2,_,_) :: ((k1,v1) -> k, (k2,v2) -> k, DMap Stm k1 v1 sf1 f1 dim0 mdim, DMap Vec k2 v2 f2 f2 dim0 mdim2) -> DMap Stm (k1,k2) (v1,v2) (FDup (FSeq sf1 FLft) (FSeq f2 FRht)) (FBoth (FSeq f1 FLft) (FSeq f2 FRht)) dim0 () 
+
+printInt :: Int -> ()
+
+reduceDStream :: ((k,v) -> a, (a,a) -> a, DMap Stm k v sf pf d m) -> a
+
+cardDStream :: DMap Stm k v sf pf dim0 mdim -> Int
+
+reduceRuns :: (Int, (t,t) -> t, List t) -> List t 
+

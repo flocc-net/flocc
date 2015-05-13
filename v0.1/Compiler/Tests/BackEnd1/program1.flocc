@@ -1,0 +1,18 @@
+-- hist solution 1
+let hist = (\(N,D) -> 
+  -- use min/max vals as x-axis bounds
+  let (minV, maxV) = reduceDistStream (
+    \(_,v) -> (v,v), 
+    \((mn1,mx1),(mn2,mx2)) 
+      -> (minf (mn1,mn2), 
+          maxf (mx1,mx2)), D) in
+  -- scaling coefficient to get bucket ids 
+  let i = divf (intToFloat (subi (N, 1)), 
+                subf (maxV, minV)) in
+  let D' = mapDistStream (id, 
+    \(_,v) -> floatToInt (mulf (v,i)), D) in
+  -- group by bucket & count group sizes
+  let D'' = groupReduceDistStreamEx (\(k,v) -> v, \_ -> 1, addi, D') in
+  -- display result data
+  printAll (readDistHashMap D''))
+in hist (100, readDistArr1D (genDistRandFloats 1000))

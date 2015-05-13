@@ -1,0 +1,12 @@
+let fit = (\L -> 
+  let num = toFloat (countAList L) in
+  let addPair = \((x,a),(y,b)) -> (addf (x,y), addf (a,b)) in
+  let (totX,totY) = reduceList (addPair, (0.0,0.0), readAList L) in 
+  let (avgX,avgY) = (divf (totX, num), divf (totY, num)) in
+  let L1 = mapList (\(x,y) -> (subf (x, avgX), subf (y, avgY)), readAList L) in
+  let L2 = mapList (\(dx,dy) -> (mulf (dx,dy), mulf (dx,dx)), L1) in
+  let (top,bot) = reduceList (addPair, (0.0,0.0), L2) in
+  let beta = divf (top,bot) in
+  (beta, subf (avgY, mulf (avgX, beta)))) in
+let (b,a) = fit (genFloatPairAList 200000000) in
+  (printFloat b, printFloat a)

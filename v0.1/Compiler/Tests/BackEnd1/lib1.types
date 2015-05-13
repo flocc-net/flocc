@@ -1,0 +1,66 @@
+id :: a -> a
+eq :: (a, a) -> Bool
+fst :: (a, b) -> a
+snd :: (a, b) -> b
+dup :: a -> (a, a)
+
+not :: Bool -> Bool
+and :: (Bool, Bool) -> Bool
+or :: (Bool, Bool) -> Bool
+
+addi :: (Int, Int) -> Int
+subi :: (Int, Int) -> Int
+muli :: (Int, Int) -> Int
+divi :: (Int, Int) -> Int
+modi :: (Int, Int) -> Int
+mini :: (Int, Int) -> Int
+maxi :: (Int, Int) -> Int
+negi :: Int -> Int
+
+eqi :: (Int, Int) -> Bool
+gti :: (Int, Int) -> Bool
+gtei :: (Int, Int) -> Bool
+lti :: (Int, Int) -> Bool
+ltei :: (Int, Int) -> Bool
+
+divf :: (Float, Float) -> Float
+mulf :: (Float, Float) -> Float
+addf :: (Float, Float) -> Float
+subf :: (Float, Float) -> Float
+minf :: (Float, Float) -> Float
+maxf :: (Float, Float) -> Float
+negf :: Float -> Float
+randf :: Null -> Float
+sqrt :: Float -> Float
+
+eqf :: (Float, Float) -> Bool
+gtf :: (Float, Float) -> Bool
+gtef :: (Float, Float) -> Bool
+ltf :: (Float, Float) -> Bool
+ltef :: (Float, Float) -> Bool
+
+intToFloat :: Int -> Float
+floatToInt :: Float -> Int
+
+while :: (v -> v, v -> Bool, v) -> v
+map :: (k1 -> k2, (k1,v1) -> v2, Map k1 v1) -> Map k2 v2
+range :: (Int, Int, Int) -> Map Int Null
+cross :: (Map k1 v1, Map k2 v2) -> Map (k1,k2) (v1,v2)
+reduce :: ((k1,v1) -> v2, (v2,v2) -> v2, Map k1 v1) -> v2
+groupReduce :: ((k1,v1) -> k2, (k1,v1) -> v2, (v2,v2) -> v2, Map k1 v1) -> Map k2 v2
+eqJoin :: ((k1,v1) -> k, (k2,v2) -> k, Map k1 v1, Map k2 v2) -> Map (k1,k2) (v1,v2)
+filter :: ((k,v) -> Bool, Map k v) -> Map k v 
+union :: (Map k v, Map k v) -> Map k v
+intersect :: (Map k v, Map k v2) -> Map k v
+diff :: (Map k v, Map k v2) -> Map k v
+genSqMatrix :: Int -> Map (Int,Int) Float
+
+genDistRandFloats :: Int -> DistArr1D Float Null Null AllNodes
+readDistArr1D :: DistArr1D Float Null Null AllNodes -> DistStm (Int, Float) Null Null AllNodes
+reduceDistStream :: ((Int, Float) -> (Float, Float), ((Float, Float), (Float, Float)) -> (Float, Float), DistStm (Int, Float) Null Null AllNodes) -> (Float, Float)
+mapDistStream :: (Int -> Int, (Int, Float) -> Int, DistStm (Int, Float) Null Null AllNodes) -> DistStm (Int, Int) Null Null AllNodes 
+groupReduceDistStreamEx :: ((Int,Int) -> Int, (Int,Int) -> Int, (Int,Int) -> Int, DistStm (Int,Int) Null Null AllNodes) -> DistHashMap Int Int Fst (ModN AllNodes) AllNodes
+readDistHashMap :: DistHashMap Int Int Fst (ModN AllNodes) AllNodes -> DistStm (Int,Int) Null Null AllNodes
+printAll :: DistStm (Int, Int) Null Null AllNodes -> Null
+
+

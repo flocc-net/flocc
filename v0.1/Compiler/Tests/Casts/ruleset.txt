@@ -1,0 +1,50 @@
+ruleset MPI
+
+-- Distributed MPI level
+level 0:
+
+genFloatMap n =>
+  genFloatSMap n ;
+
+forceSave v =>
+  readVMap v ;
+
+printMap mp =>
+    printSMap mp ;
+
+intRangeMap (f,l,s) => 
+   intRangeSMap1 (f,l,s)
+  | intRangeSMap2 (f,l,s)
+  | intRangeSMapMirr (f,l,s) ;
+
+maxMap (f,v0,mp) =>
+    maxVMap (f,\(x,y)->if lt (x,y) then y else x, v0,mp)
+  | reduceSMap (f, \(x,y)->if lt (x,y) then y else x, v0, mp) ;
+
+minMap (f,v0,mp) =>
+    minVMap (f,\(x,y)->if lt (x,y) then x else y, v0,mp)
+  | reduceSMap (f, \(x,y)->if lt (x,y) then x else y, v0, mp) ;
+
+countMap mp =>
+    countVMapMirr mp
+  | countVMap mp
+  | countSMap mp ;
+
+mapMap (f,mp) =>
+    mapSMap1 (f,mp)
+  | mapSMap2 (f,mp) ;
+
+reduceMap (vf,rf,v0,mp) =>
+    reduceSMap (vf,rf,v0,mp) ;
+
+groupReduceMap (kf,vf,rf,v0,mp) => 
+    groupReduceSMap (kf,vf,rf,v0,mp)
+  | groupReduceHMap1 (kf,vf,rf,v0,mp)
+  | groupReduceHMap2 (kf,vf,rf,v0,mp) ;
+
+crossMaps (a,b) =>
+   crossVMaps11 (a,b)
+ | mapSMap1 (\((k,i),(v,w)) -> ((i,k),(w,v)), crossVMaps11 (b,a)) ;
+
+union (a,b) =>
+ unionVMaps1 (a,b) ;

@@ -1,0 +1,18 @@
+--sortVMap (saveVMap (genFloatSMap 100))
+--sortVMap (genFloatSMap 100)
+--(sortVMap (genFloatSMap 100), 1)
+--let x = genFloatSMap 100 in (sortVMap x)
+--let x = genFloatSMap 100 in (sortVMap (saveVMap x), sortVMap x) 
+--sortVMap (if eqi (1,1) then (genFloatSMap 100) else (genFloatSMap 200)) -- PROBLEM!!!
+--(\x -> sortVMap x) (genFloatSMap 100)
+--sortVMap ((\_ -> genFloatSMap 100) ())
+--if eqi (1,1) then (genFloatSMap 100) else (genFloatMap 100)
+--let x = (genFloatSMap 10, genFloatSMap 100) in (let (y,z) = x in (sortVMap y, sortVMap z))
+--let x = (genFloatSMap 10, genFloatSMap 10) in ((\(y,z) -> (sortVMap y, sortVMap z)) x)
+reduceMap (snd, addf, 0.0, genFloatSMap 100)
+
+-- lets, ifs, function apps, lambdas, 
+-- always choose the latest/greatest exp id
+-- will be the var use rather than the let bound expression
+-- will be consuming the result of an if expression (just before the next fun app)
+--   rather than either the if then or else leaf.

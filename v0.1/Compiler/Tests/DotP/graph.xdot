@@ -1,0 +1,75 @@
+digraph gM1to50 {
+label = "gM1to50";
+color=blue;
+subgraph cluster1 {
+label = "g86to85";
+color=blue;
+n71 -> n85;
+n85 -> n92;
+n86 -> n85;
+n85 -> outnode85;
+n71 [label="71\nvarNode:mulf"];
+n85 [label="85\nappNode"];
+n86 [label="86\nvarNode:in"];
+n92 [label="92\nvarNode:out"]
+}
+subgraph cluster2 {
+label = "g90to89";
+color=blue;
+n81 -> n89;
+n89 -> n93;
+n90 -> n89;
+n89 -> outnode89;
+n81 [label="81\nvarNode:addf"];
+n89 [label="89\nappNode"];
+n90 [label="90\nvarNode:in"];
+n93 [label="93\nvarNode:out"]
+}
+n51 -> n50;
+n55 -> n54;
+n55 -> n74;
+n56 -> n55;
+n57 -> n55;
+n58 -> n57;
+n59 -> n57;
+n60 -> n54;
+n60 -> n74;
+n61 -> n60;
+n62 -> n60;
+n68 -> n80;
+n69 -> n68;
+n70 -> n68;
+n72 -> n70;
+n73 -> n72;
+n74 -> n72;
+n78 -> n50;
+n79 -> n78;
+n80 -> n78;
+n82 -> n80;
+n87 -> n70;
+n91 -> n80;
+n50 -> outnode50;
+n50 [label="50\nappNode"];
+n51 [label="51\nvarNode:printFloat"];
+n54 [label="54\ntupNode"];
+n55 [label="55\nappNode"];
+n56 [label="56\nvarNode:readList"];
+n57 [label="57\nappNode"];
+n58 [label="58\nvarNode:genFloatList"];
+n59 [label="59\nlitNode:1000000"];
+n60 [label="60\nappNode"];
+n61 [label="61\nvarNode:genFloatList"];
+n62 [label="62\nlitNode:2000000"];
+n68 [label="68\nappNode"];
+n69 [label="69\nvarNode:mapList"];
+n70 [label="70\ntupNode"];
+n72 [label="72\nappNode"];
+n73 [label="73\nvarNode:zip"];
+n74 [label="74\ntupNode"];
+n78 [label="78\nappNode"];
+n79 [label="79\nvarNode:reduceList"];
+n80 [label="80\ntupNode"];
+n82 [label="82\nlitNode:0.0"];
+n87 [label="87\nfunNode:g86to85"];
+n91 [label="91\nfunNode:g90to89"]
+}

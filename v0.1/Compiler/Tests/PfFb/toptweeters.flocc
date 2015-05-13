@@ -1,0 +1,9 @@
+let toptweeters = (\(N,D) -> -- (Int, List Int) 
+  -- count number of tweets per user
+  let counts = groupReduce (id, \_ -> 1, addi, D) in
+  -- sort in descending order
+  let counts' = sortDesc (id, toList counts) in
+  -- take top N
+  take (N, counts')) in
+-- run on random data
+toptweeters (100, genInts 20000000)  

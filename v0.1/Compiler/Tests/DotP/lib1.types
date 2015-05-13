@@ -1,0 +1,63 @@
+id :: a -> a
+eq :: (a, a) -> Bool
+fst :: (a, b) -> a
+snd :: (a, b) -> b
+dup :: a -> (a, a)
+
+not :: Bool -> Bool
+and :: (Bool, Bool) -> Bool
+or :: (Bool, Bool) -> Bool
+
+addi :: (Int, Int) -> Int
+subi :: (Int, Int) -> Int
+muli :: (Int, Int) -> Int
+divi :: (Int, Int) -> Int
+modi :: (Int, Int) -> Int
+mini :: (Int, Int) -> Int
+maxi :: (Int, Int) -> Int
+negi :: Int -> Int
+
+eqi :: (Int, Int) -> Bool
+gti :: (Int, Int) -> Bool
+gtei :: (Int, Int) -> Bool
+lti :: (Int, Int) -> Bool
+ltei :: (Int, Int) -> Bool
+
+divf :: (Float, Float) -> Float
+mulf :: (Float, Float) -> Float
+addf :: (Float, Float) -> Float
+subf :: (Float, Float) -> Float
+minf :: (Float, Float) -> Float
+maxf :: (Float, Float) -> Float
+negf :: Float -> Float
+randf :: Null -> Float
+sqrt :: Float -> Float
+
+eqf :: (Float, Float) -> Bool
+gtf :: (Float, Float) -> Bool
+gtef :: (Float, Float) -> Bool
+ltf :: (Float, Float) -> Bool
+ltef :: (Float, Float) -> Bool
+
+toFloat :: Int -> Float
+toInt :: Float -> Int
+
+ifFun :: (Bool, () -> a, () -> a) -> a
+
+genFloatList :: Int -> DList Vec Float q d ()
+genFloatAList :: Int -> DList Arr Float q d ()
+genFloatPairList :: Int -> DList Vec (Float,Float) q d ()
+genFloatPairAList :: Int -> DList Arr (Float,Float) q d ()
+
+readList :: DList Vec t q d m -> DList Stm t q d m
+readAList :: DList Arr t q d m -> DList Stm t q d m
+
+zip :: (DList Stm a Cyc d m1, DList Vec b Cyc d m2) -> DList Stm (a,b) Cyc d (Intersect m1 m2)
+zipVLists :: (DList Vec a Cyc d m1, DList Vec b Cyc d m2) -> DList Stm (a,b) Cyc d (Intersect m1 m2)
+mapList :: (a -> b, DList Stm a q d m) -> DList Stm b q d m
+reduceList :: ((a,a) -> a, a, DList Stm a q d m) -> a
+printFloat :: Float -> ()
+
+countList :: DList Vec v q d m -> Int
+countAList :: DList Arr v q d m -> Int
+

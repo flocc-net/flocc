@@ -1,0 +1,15 @@
+let hist = (\(N,D) -> 
+  -- use min/max vals as x-axis bounds
+  let (minV, maxV) = reduce (
+    \(_,v) -> (v,v), 
+    \((mn1,mx1),(mn2,mx2)) 
+      -> (minf (mn1,mn2), 
+          maxf (mx1,mx2)), D) in
+  -- scaling coefficient to get bucket ids 
+  let i = divf (toFloat (subi (N, 1)), 
+                subf (maxV, minV)) in
+  let D' = map (id, 
+    \(_,v) -> toInt (mulf (v,i)), D) in
+  -- group by bucket & count group sizes
+  groupReduce (\(k,v) -> v, \_ -> 1, addi, D')) 
+in hist (100, genSqMatrix 1000)

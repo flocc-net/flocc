@@ -1,0 +1,1 @@
+(let axes = (let (a, b) = ((intRangeSMap1 (-100, 40, 1)), (intRangeSMap1 (-10, 10, 1))) in (crossVMaps11 (a, b))) in (let set = (mapSMap1 ((\((x, y), _) -> ((x, y), (mandel ((divf ((intToFloat x), 40.0)), (divf ((intToFloat y), 15.0)))))), axes)) in (printSMap set)))

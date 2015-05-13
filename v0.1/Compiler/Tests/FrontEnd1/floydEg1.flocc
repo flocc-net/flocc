@@ -1,0 +1,15 @@
+let floyd = (\(N,I0) ->
+  let N' = dec N in
+  let next = (\(I,k) -> 
+    let Iik = subArr ((0,k), (N',k), I) in
+    let Ikj = subArr ((k,0), (k,N'), I) in
+    let I1 = eqJoinArr (\(i,_) -> i, \(i,_) -> i, I, Iik) in
+    let I2 = eqJoinArr (\((_,j),_) -> j, \(_,j) -> j, I1, Ikj) in
+    let I' = mapArrInv (
+      \((i,_),_) -> i,   
+      \(_,((ij,ik),kj)) 
+        -> (minf (ij, addf (ik,kj))), 
+      \(i,j) -> (((i,j),(i,k)),(k,j)), I2) in     
+    ((I', inc k), lti (k, N'))) in
+  while (next, (I0, 0)))
+in floyd (100, genSqMatrix 100)

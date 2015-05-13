@@ -1,0 +1,50 @@
+solveAll [Con 1 (Var "F") (Fun (Tup [Tup [Arg "a",Arg "b"],Tup [Arg "c",Arg "d"]]) (Tup [Arg "a",Arg "b"])),Con 2 (App (App (Var "lftFun") (Var "F")) (Arg "x")) (App (Var "F'") (Arg "x"))]
+
+solve [Con 1 (Var "F") (Fun (Tup [Tup [Arg "a",Arg "b"],Tup [Arg "c",Arg "d"]]) (Tup [Arg "a",Arg "b"])),Con 2 (App (App (Var "lftFun") (Var "F")) (Arg "x")) (App (Var "F'") (Arg "x"))] ...
+[Var "F"]
+[Arg "a",Arg "b",Arg "c",Arg "d",Arg "a",Arg "b"]
+isConcrete Var "F" = False
+F is higher order? False
+
+"F" |-> Fun (Tup [Tup [Arg "a",Arg "b"],Tup [Arg "c",Arg "d"]]) (Tup [Arg "a",Arg "b"])
+  = [Con 2 (App (App (Var "lftFun") (Fun (Tup [Tup [Arg "a",Arg "b"],Tup [Arg "c",Arg "d"]]) (Tup [Arg "a",Arg "b"]))) (Arg "x")) (App (Var "F'") (Arg "x"))]
+
+solve [Con 2 (App (App (Var "lftFun") (Fun (Tup [Tup [Arg "a",Arg "b"],Tup [Arg "c",Arg "d"]]) (Tup [Arg "a",Arg "b"]))) (Arg "x")) (App (Var "F'") (Arg "x"))] ...
+[Var "lftFun",Arg "a",Arg "b",Arg "c",Arg "d",Arg "a",Arg "b",Arg "x"]
+[Var "F'",Arg "x"]
+isConcrete App (App (Var "lftFun") (Fun (Tup [Tup [Arg "a",Arg "b"],Tup [Arg "c",Arg "d"]]) (Tup [Arg "a",Arg "b"]))) (Arg "x") = False
+buildCons 2 App (App (Var "lftFun") (Fun (Tup [Tup [Arg "a",Arg "b"],Tup [Arg "c",Arg "d"]]) (Tup [Arg "a",Arg "b"]))) (Arg "x")
+
+buildCons 2 App (Var "lftFun") (Fun (Tup [Tup [Arg "a",Arg "b"],Tup [Arg "c",Arg "d"]]) (Tup [Arg "a",Arg "b"]))
+
+buildCons 2 Var "lftFun"
+
+buildCons 2 Fun (Tup [Tup [Arg "a",Arg "b"],Tup [Arg "c",Arg "d"]]) (Tup [Arg "a",Arg "b"])
+
+buildCons 2 Arg "x"
+
+solve [Con 2 (Var "lftFun") (Fun (Fun (Tup [Tup [Arg "a",Arg "b"],Tup [Arg "c",Arg "d"]]) (Tup [Arg "a",Arg "b"])) (Var "0")),Con 2 (Var "0") (Fun (Arg "x") (Var "1")),Con 2 (Var "1") (App (Var "F'") (Arg "x"))] ...
+[Var "lftFun"]
+[Arg "a",Arg "b",Arg "c",Arg "d",Arg "a",Arg "b",Var "0"]
+isConcrete Var "lftFun" = False
+lftFun is higher order? True
+
+solve [Con 2 (Var "0") (Fun (Arg "x") (Var "1")),Con 2 (Var "1") (App (Var "F'") (Arg "x"))] ...
+[Var "0"]
+[Arg "x",Var "1"]
+isConcrete Var "0" = False
+0 is higher order? False
+
+"0" |-> Fun (Arg "x") (Var "1")
+  = [Con 2 (Var "1") (App (Var "F'") (Arg "x"))]
+
+solve [Con 2 (Var "1") (App (Var "F'") (Arg "x"))] ...
+[Var "1"]
+[Var "F'",Arg "x"]
+isConcrete Var "1" = False
+1 is higher order? False
+
+"1" |-> App (Var "F'") (Arg "x")
+  = []
+
+Run: Prelude.undefined

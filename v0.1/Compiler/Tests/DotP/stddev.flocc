@@ -1,0 +1,7 @@
+let stddev = (\L -> 
+  let num = toFloat (countAList L) in 
+  let avgX = divf (reduceList (addf, 0.0, readAList L), num) in
+  let L1 = mapList (\x -> sqr (subf (x, avgX)), readAList L) in
+  let ss = reduceList (addf, 0.0, L1) in
+  sqrt (divf (ss, subf (num, 1.0)))) in
+printFloat (stddev (genFloatAList 400000000))

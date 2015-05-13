@@ -1,0 +1,12 @@
+let matmul = (\(A,B) -> 
+  -- zip all combinations of
+  -- rows from A and cols from B
+  let R1 = eqJoinDArr3 (snd, fst, A, B) in
+  -- multiply values from A and B
+  let R2 = mapDArr1 (id, id, \(i,v) -> mulf v, R1) in
+  -- group by dest & sum-reduce
+  let R3 = groupRedDArr2 (
+    \((ai,aj),(bi,bj)) -> (ai,bj), 
+    snd, addf, R2) in 
+  printDArr (readDArr R3)) 
+in matmul (mirrDArr (partDArr (genDMat 2000)), mirrDArr (partDArr (genDMat 2000)))

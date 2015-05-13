@@ -1,0 +1,70 @@
+let id = \x -> x in
+let fst = \(x,y) -> x in
+let snd = \(x,y) -> y in
+let dup = \x -> (x,x) in
+let sqrf = \x -> mulf (x,x) in
+let sqri = \x -> muli (x,x) in
+
+
+let addPoints = \((x1,y1),(x2,y2)) -> (addf (x1,x2), addf (y1,y2)) in
+let divPoint = \((x,y),q) -> (divf (x,q), divf (y,q)) in
+let distPoints = \((x1,y1),(x2,y2)) -> (sqrt (addf (sqrf (subf (x2,x1)), 
+  sqrf (subf (y2,y1))))) in
+
+-- points :: Map pointId (newClusId, oldClusId, pos, dist)
+-- clusters :: Map clusId pos
+
+-- init maps
+-- points0 :: Map pointId (newClusId, oldClusId,(posx,posy),distFromClusCentre)
+let points0 = mapSMap1 (\(pid,_) -> (pid,(0,0,(randf (),randf ()),0.0)), intRangeSMap1 (1,100,1)) in
+-- clusters0 :: Map clusId (posx, posy)
+let clusters0 = mapSMap1 (\(clusId,_) -> (clusId, (randf(), randf())), intRangeSMapMirr (1,5,1)) in
+
+let (_, _, lastNChanged) = 
+
+loop (\(points, clusters, nchanged) -> ( 
+  -- pairs :: Map (pointId,clusId) ((newClusId, oldClusId, pointPos, dist), clusPos) 
+  let pairs = crossVMaps11 (readVMap points, clusters) in
+
+  -- points :: Map pointId (newClusId, oldClusId, pointPos, distFromNewClus)
+  let points' = groupReduceHMap2 (
+    \((pid,_),_) -> pid,
+    \((pid,cid),((ncid,ocid,ppos,d),cpos)) -> (cid, ocid, ppos, distPoints (cpos, ppos)),
+    \((nc1,oc1,p1,d1),(nc2,oc2,p2,d2)) -> (if ltf (d1,d2) then (nc1,oc1,p1,d1) else (nc2,oc2,p2,d2)), 
+    (-1,-1,(-1.0,-1.0),9000000.0),
+    pairs) in
+
+  -- new cluster centres (avg mem pos)
+  -- clusters' :: Map clusterId (summedPos, memCount)
+  let clusters' = groupReduceHMap2 (
+    \(pid,(ncid,ocid,ppos,d)) -> ncid,
+    \(pid,(ncid,ocid,ppos,d)) -> (ppos, 1),
+    \((sum1,tot1),(sum2,tot2)) -> (addPoints (sum1, sum2), addi (tot1, tot2)), 
+    ((0.0,0.0),0),
+    points') in
+
+  -- clusters'' :: 
+  let clusters'' = mapSMap1 (
+    \(cid,(psum, ptot)) -> (cid, divPoint (psum, intToFloat ptot)), readHMap clusters') in 
+
+  let totalChanged = reduceSMap (
+    \(pid,(ncid,ocid,ppos,d)) -> (if eqi (ncid, ocid) then 0 else 1),
+     addi,
+     0, 
+     readHMap points') in 
+
+  (repartVMap4 (readHMap points'), mirrVMap (saveVMap clusters''), totalChanged)
+),
+\(points, clusters, nchanged) -> (
+  lti (nchanged, 10)
+),
+(saveVMap points0, saveVMap clusters0, 100)
+)
+
+in
+
+-- 
+-- let clusters''' = union (clusters', clusters0) in
+
+-- display
+(print lastNChanged)

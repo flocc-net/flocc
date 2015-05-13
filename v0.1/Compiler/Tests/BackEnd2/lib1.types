@@ -1,0 +1,86 @@
+id :: a -> a
+eq :: (a, a) -> Bool
+fst :: (a, b) -> a
+snd :: (a, b) -> b
+dup :: a -> (a, a)
+
+not :: Bool -> Bool
+and :: (Bool, Bool) -> Bool
+or :: (Bool, Bool) -> Bool
+
+addi :: (Int, Int) -> Int
+subi :: (Int, Int) -> Int
+muli :: (Int, Int) -> Int
+divi :: (Int, Int) -> Int
+modi :: (Int, Int) -> Int
+mini :: (Int, Int) -> Int
+maxi :: (Int, Int) -> Int
+negi :: Int -> Int
+
+eqi :: (Int, Int) -> Bool
+gti :: (Int, Int) -> Bool
+gtei :: (Int, Int) -> Bool
+lti :: (Int, Int) -> Bool
+ltei :: (Int, Int) -> Bool
+
+divf :: (Float, Float) -> Float
+mulf :: (Float, Float) -> Float
+addf :: (Float, Float) -> Float
+subf :: (Float, Float) -> Float
+minf :: (Float, Float) -> Float
+maxf :: (Float, Float) -> Float
+negf :: Float -> Float
+randf :: Null -> Float
+sqrt :: Float -> Float
+
+eqf :: (Float, Float) -> Bool
+gtf :: (Float, Float) -> Bool
+gtef :: (Float, Float) -> Bool
+ltf :: (Float, Float) -> Bool
+ltef :: (Float, Float) -> Bool
+
+intToFloat :: Int -> Float
+floatToInt :: Float -> Int
+
+while :: (v -> v, v -> Bool, v) -> v
+map :: (k1 -> k2, (k1,v1) -> v2, Map k1 v1) -> Map k2 v2
+range :: (Int, Int, Int) -> Map Int Null
+cross :: (Map k1 v1, Map k2 v2) -> Map (k1,k2) (v1,v2)
+reduce :: ((k1,v1) -> v2, (v2,v2) -> v2, Map k1 v1) -> v2
+groupReduce :: ((k1,v1) -> k2, (k1,v1) -> v2, (v2,v2) -> v2, Map k1 v1) -> Map k2 v2
+eqJoin :: ((k1,v1) -> k, (k2,v2) -> k, Map k1 v1, Map k2 v2) -> Map (k1,k2) (v1,v2)
+filter :: ((k,v) -> Bool, Map k v) -> Map k v 
+union :: (Map k v, Map k v) -> Map k v
+intersect :: (Map k v, Map k v2) -> Map k v
+diff :: (Map k v, Map k v2) -> Map k v
+
+-- emptyDArr :: (Int, Int) -> DArr Stm Int ()
+-- crossDArr1 :: (DArr Arr i1 v1 lf1 pf1 d1 (d2,m1), DArr Arr i2 v2 lf2 pf2 d2 (d1,m2)) -> DArr Stm (i1,i2) (v1,v2) (FPair lf1 lf2) (FPair pf1 pf2) (d1,d2,m1,m2) 
+-- readDArr :: DArr Arr i v lf pf pd m -> DArr Stm i v lf pf pd m
+-- writeDArr :: DArr Stm i v lf pf pd m -> DArr Arr i v lf pf pd m
+
+-- FFst FSnd FId FSwap FNull
+-- FPair FSeq
+-- GFst GSnd
+-- DFst DSnd
+
+genDMat :: Int -> DArr Arr (Int,Int) Float l FNull () m
+
+partDArr :: DArr Arr i v l FNull () m -> DArr Arr i v l pf d m
+mirrDArr :: DArr Arr i v l pf d m -> DArr Arr i v l pf d (m1,m)
+readDArr :: DArr Arr i v l pf d m -> DArr Stm i v l pf d m 
+saveDArr :: DArr Stm i v l pf d m -> DArr Arr i v l pf d m
+
+eqJoinDArr1 (f1,f2,_,_) :: (i1 -> i, i2 -> i, DArr Arr i1 v1 l1 f1 d m, DArr Arr i2 v2 l2 () d m) -> DArr Stm (i1,i2) (v1,v2) (FPair l1 l2) (FBoth (FSeq f1 FFst) (FSeq f2 FSnd)) d m 
+eqJoinDArr2 :: (i1 -> i, i2 -> i, DArr Arr i1 v1 l1 (GFst f) (DFst f d) m, DArr Arr i2 v2 l2 FNull () (d,m)) -> DArr Stm (i1,i2) (v1,v2) (FPair l1 l2) f d m 
+eqJoinDArr3 :: (i1 -> i, i2 -> i, DArr Arr i1 v1 (GFst l) (GFst f) (DFst f d) ((DSnd f d),m), DArr Arr i2 v2 (GSnd l) (GSnd f) (DSnd f d) ((DFst f d),m)) -> DArr Stm (i1,i2) (v1,v2) l f d m
+
+mapDArr1 (f,_,_,_) :: (i1 -> i2, i2 -> i1, (i1,v1) -> v2, DArr Stm i1 v1 (FSeq lf f) (FSeq pf f) d m) -> DArr Stm i2 v2 lf pf d m
+mapDArr2 (_,invF,_,_) :: (i1 -> i2, i2 -> i1, (i1,v1) -> v2, DArr Stm i1 v1 lf pf pd m) -> DArr Stm i2 v2 (FSeq lf invF) (FSeq pf invF) pd m
+
+groupRedDArr1 :: (i1 -> i2, (i1,v1) -> v2, (v2,v2) -> v2, DArr Stm i1 v1 l1 f d1 m1) -> DArr Arr i2 v2 l2 FId d2 m2
+groupRedDArr2 (f,_,_,_) :: (i1 -> i2, (i1,v1) -> v2, (v2,v2) -> v2, DArr Stm i1 v1 l1 f d m) -> DArr Arr i2 v2 l2 FId d m
+groupRedDArr3 (f,_,_,_) :: (i1 -> i2, (i1,v1) -> v2, (v2,v2) -> v2, DArr Stm i1 v1 (FPair f (GRem f)) f d m) -> DArr Stm i2 v2 FId FId d m
+
+printDArr :: DArr Stm i v lf pf d m -> Null
+

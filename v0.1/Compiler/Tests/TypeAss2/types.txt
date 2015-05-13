@@ -1,0 +1,146 @@
+id :: a -> a
+eq :: (a, a) -> Bool
+lt :: (x,x) -> Bool
+fst :: (x,y) -> x
+snd :: (x,y) -> y
+dup :: x -> (x,x)
+print :: x -> ()
+cast :: a -> b
+
+loop :: (s -> s, s -> Bool, s) -> s
+
+not :: Bool -> Bool
+and :: (Bool, Bool) -> Bool
+or :: (Bool, Bool) -> Bool
+
+maxiv :: () -> Int
+miniv :: () -> Int
+
+addi :: (Int, Int) -> Int
+subi :: (Int, Int) -> Int
+muli :: (Int, Int) -> Int
+divi :: (Int, Int) -> Int
+modi :: (Int, Int) -> Int
+mini :: (Int, Int) -> Int
+maxi :: (Int, Int) -> Int
+powi :: (Int, Int) -> Int
+shri :: (Int, Int) -> Int
+shli :: (Int, Int) -> Int
+negi :: Int -> Int
+
+eqi :: (Int, Int) -> Bool
+gti :: (Int, Int) -> Bool
+gtei :: (Int, Int) -> Bool
+lti :: (Int, Int) -> Bool
+ltei :: (Int, Int) -> Bool
+
+maxfv :: () -> Float
+minfv :: () -> Float
+
+divf :: (Float, Float) -> Float
+mulf :: (Float, Float) -> Float
+addf :: (Float, Float) -> Float
+subf :: (Float, Float) -> Float
+minf :: (Float, Float) -> Float
+maxf :: (Float, Float) -> Float
+powf :: (Float, Float) -> Float
+negf :: Float -> Float
+randf :: Null -> Float
+sqrt :: Float -> Float
+
+eqf :: (Float, Float) -> Bool
+gtf :: (Float, Float) -> Bool
+gtef :: (Float, Float) -> Bool
+ltf :: (Float, Float) -> Bool
+ltef :: (Float, Float) -> Bool
+
+intToFloat :: Int -> Float
+floatToInt :: Float -> Int
+mandel :: (Float, Float) -> Int
+
+ifFun :: (Bool, () -> a, () -> a) -> a
+
+reduceList :: ((v,v) -> v, List v) -> v
+mapList :: (v -> w, List v) -> List w
+groupReduce :: (v -> k, v -> w, (w,w) -> w, w, List v) -> Map k w
+genFloats :: Int -> List Float
+sortList :: ((v,v) -> Bool, List v) -> List v
+take :: (Int, List v) -> List v
+head :: List v -> v
+
+emptyMap :: () -> Map k v
+countMap :: Map k v -> Int
+maxMap :: ((k,v) -> w, w, Map k v) -> w
+minMap :: ((k,v) -> w, w, Map k v) -> w
+reduceMap :: ((k,v) -> w, (w,w) -> w, w, Map k v) -> w
+mapMap :: ((k,v) -> (i,w), Map k v) -> Map i w
+mapMapVals :: (v -> w, Map k v) -> Map k w 
+groupReduceMap :: ((k,v) -> i, (k,v) -> w, (w,w) -> w, w, Map k v) -> Map i w
+genFloatMap :: Int -> Map Int Float
+printMap :: Map k v -> ()
+intRangeMap :: (Int,Int,Int) -> Map Int ()
+crossMaps :: (Map k v, Map i w) -> Map (k,i) (v,w) 
+union :: (Map k v, Map k v) -> Map k v
+forceSave :: a -> a
+forceSave2 :: a -> a
+
+readIter :: DMap Iter k v of pf d m -> DMap Stm k v of pf d m
+
+readVMap :: DMap Vec k v of pf d m -> DMap Stm k v of pf d m
+readHMap :: DMap Hsh k v of pf d m -> DMap Stm k v FNull pf d m
+saveVMap :: DMap Stm k v of pf d m -> DMap Vec k v of pf d m
+sortVMap :: DMap Vec k v of1 pf d m -> DMap Vec k v of2 pf d m
+iterVMap1 :: DMap Vec k v of pf d m -> DMap Iter k v of pf d m
+iterVMap2 :: DMap Vec k v of pf d m -> DMap Iter k v FFst pf d m
+
+readTMap :: DMap Tree k v of pf d m -> DMap Stm k v of pf d m
+saveTMap1 :: DMap Stm k v of pf d m -> DMap Tree k v of pf d m
+saveTMap2 :: DMap Stm k v of1 pf d m -> DMap Tree k v of2 pf d m
+iterTMap :: DMap Tree k v of pf d m -> DMap Tree k v of pf d m
+countTMap :: DMap Tree k v of pf d m -> Int
+countTMapMirr :: DMap Tree k v of FNull () m -> Int
+maxTMap (f,_,_,_) :: ((k,v) -> w, (w,w) -> w, w, DMap Tree k v f pf d m) -> w
+minTMap (f,_,_,_) :: ((k,v) -> w, (w,w) -> w, w, DMap Tree k v f pf d m) -> w
+
+unionTMaps3 :: (DMap Stm k v of1 FFst d m, DMap Stm k v of2 FFst d m) -> DMap Tree k v FFst FFst d m
+unionSMaps1 :: (DMap Stm k v FFst FFst d m, DMap Iter k v FFst FFst d m) -> DMap Stm k v FFst FFst d m
+unionSMaps2 :: (DMap Iter k v FFst FFst d m, DMap Stm k v FFst FFst d m) -> DMap Stm k v FFst FFst d m
+
+eqJoinSMaps1 :: (DMap Stm k v of1 pf1 d1 (m1,d2), DMap Iter i w of2 pf2 d2 (m1,d1)) -> DMap Stm (k,i) (v,w) (FDup (FSeq of1 FLft) (FSeq of2 FRht)) (FDup (FSeq pf1 FLft) (FSeq pf2 FRht)) (d1,d2) m1  
+
+repartVMap1 :: DMap Stm k v of pf1 d m -> DMap Vec k v of pf2 d ()
+repartVMap2 :: DMap Vec k v pf2 pf1 d m -> DMap Vec k v pf2 pf2 d ()
+repartVMap3 :: DMap Stm k v pf1 pf1 d m -> DMap Vec k v pf1 pf2 d ()
+repartVMap4 :: DMap Stm k v of1 pf1 d m -> DMap Vec k v FNull pf2 d ()
+mirrVMap :: DMap Vec k v of pf d () -> DMap Vec k v of FNull () d
+sieveVMap :: DMap Vec k v of pf d m1 -> DMap Vec k v of pf d ()
+sieveSMap :: DMap Stm k v of FNull () m1 -> DMap Stm k v of pf m1 ()
+
+emptySMap :: () -> DMap Stm k v of pf d m
+emptyVMap :: () -> DMap Vec k v of pf d m
+emptyHMap :: () -> DMap Hsh k v of pf d m
+countSMap :: DMap Stm k v of pf d m -> Int
+countVMap :: DMap Vec k v of pf d m -> Int
+countVMapMirr :: DMap Vec k v of FNull () m -> Int
+countHMap :: DMap Hsh k v of pf d m -> Int
+countHMapMirr :: DMap Hsh k v of FNull () m -> Int
+maxVMap (f,_,_,_) :: ((k,v) -> w, (w,w) -> w, w, DMap Vec k v f pf d m) -> w
+minVMap (f,_,_,_) :: ((k,v) -> w, (w,w) -> w, w, DMap Vec k v f pf d m) -> w
+reduceSMap :: ((k,v) -> w, (w,w) -> w, w, DMap Stm k v of pf d m) -> w
+mapSMap1 (f,_) :: ((k,v) -> (i,w), DMap Stm k v (FSeq of f) (FSeq pf f) d m) -> DMap Stm i w of pf d m
+mapSMap2 :: ((k,v) -> (i,w), DMap Stm k v of pf d m) -> DMap Stm i w FNull UniVar d m
+mapSMapVals1 :: (v -> w, DMap Stm k v FFst FFst d m) -> DMap Stm k w FFst FFst d m
+mapSMapVals2 :: (v -> w, DMap Stm k v of pf d m) -> DMap Stm k w UniVar UniVar d m
+groupReduceSMap (f,_,_,_,_) :: ((k,v) -> i, (k,v) -> w, (w,w) -> w, w, DMap Stm k v f f d m) -> DMap Stm i w FFst FFst d m
+groupReduceHMap1 (f,_,_,_,_) :: ((k,v) -> i, (k,v) -> w, (w,w) -> w, w, DMap Stm k v of f d m) -> DMap Hsh i w FFst FFst d m
+groupReduceHMap2 :: ((k,v) -> i, (k,v) -> w, (w,w) -> w, w, DMap Stm k v of pf d m) -> DMap Hsh i w FFst FFst d m
+genFloatSMap :: Int -> DMap Stm Int Float FNull UniVar d ()
+printSMap :: DMap Stm k v of pf d m -> ()
+intRangeSMap1 :: (Int,Int,Int) -> DMap Stm Int () FFst FFst d m
+intRangeSMap2 :: (Int,Int,Int) -> DMap Stm Int () FFst UniVar d m
+intRangeSMapMirr :: (Int,Int,Int) -> DMap Stm Int () FFst FNull () m 
+crossVMaps11 :: (DMap Stm k v of1 pf1 d (), DMap Vec i w of2 pf2 () d) -> DMap Stm (k,i) (v,w) (FDup (FSeq of1 FLft) (FSeq of2 FRht)) (FSeq pf1 FLft) d ()
+unionVMaps1 :: (DMap Stm k v FFst FFst d m, DMap Vec k v FFst FFst d m) -> DMap Stm k v FFst FFst d m 
+unionVMaps3 :: (DMap Vec k v FFst FFst d m, DMap Stm k v FFst FFst d m) -> DMap Stm k v FFst FFst d m 
+unionVMaps2 :: (DMap Vec k v FFst FFst d m, DMap Vec k v FFst FFst d m) -> DMap Vec k v FFst FFst d m 
+

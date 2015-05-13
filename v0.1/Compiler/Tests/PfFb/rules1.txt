@@ -1,0 +1,15 @@
+ruleset MPI
+
+-- Distributed MPI level
+level 0:
+
+eqJoin (f1,f2,x,x') => 
+    eqJoin1 (f1, f2, x, x')
+  | map (\((k,k'),(v,v')) -> ((k',k),(v',v)), 
+         eqJoin1 (f2,f1,x',x,)) 
+  | eqJoin2 (f1, f2, x, x')
+  | map (\((k,k'),(v,v')) -> ((k',k),(v',v)), 
+         eqJoin2 (f2,f1,x',x,))  
+  | eqJoin3 (f1, f2, x, x')
+  | map (\((k,k'),(v,v')) -> ((k',k),(v',v)), 
+         eqJoin3 (f2,f1,x',x)) ;

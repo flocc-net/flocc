@@ -1,0 +1,50 @@
+name:                flocc-proto1
+version:             0.1.0.0
+synopsis:            Flocc (functional language on compute clusters) compiler prototype. 
+homepage:            http://www.flocc.net/
+description:         Compiler prototype for the Flocc data-parallel language. Takes
+                     high-level Flocc data-parallel programs, and searches, generating different
+                     possible implementations in C++ and MPI, compiling them and measuring 
+                     their runtime to try and automatically generate fast/optimal distributed-memory/cluster
+                     implementations.
+license:             Apache  
+license-file:        LICENSE
+author:              Tristan Aubrey-Jones
+maintainer:          developer@flocc.net 
+copyright:           Copyright: (c) Tristan Aubrey-Jones 2010-2015
+stability:           experimental
+-- category:            
+build-type:          Simple
+--hs-source-dir:       src
+-- extra-source-files:  
+cabal-version:       >=1.10
+
+-- Performance feedback search
+-- Does exhaustive search of all possible cluster implementations
+-- of a program, caches the runtimes, and then runs various search
+-- algorithms using these times, to find out how fast they would 
+-- have converged to find the optimal implementation.
+executable flocc-pffb
+  main-is: Compiler/Tests/PfFb/Run.hs
+  -- other-modules:       
+  other-extensions:    CPP, TypeFamilies, ScopedTypeVariables
+  build-depends:       base >=4.6 && <4.7, array >=0.4 && <0.5, containers >=0.5 && <0.6, mtl >=2.1 && <2.2, transformers >=0.3 && <0.4, text >=1.1 && <1.2, directory >=1.2 && <1.3, time, random, bytestring, exceptions >=0.6, old-locale, process
+  -- hs-source-dirs:      
+  build-tools:         alex, happy
+  default-language:    Haskell2010
+  ghc-options:	       -rtsopts -O2
+  ghc-prof-options:    -auto-all
+
+--executable flocc-casts
+--  main-is: Compiler/Tests/Casts/Run.hs
+--  -- other-modules:       
+--  other-extensions:    CPP, TypeFamilies, ScopedTypeVariables
+--  build-depends:       base >=4.6 && <4.7, array >=0.4 && <0.5, containers >=0.5 && <0.6, mtl >=2.1 && <2.2, transformers >=0.3 && <0.4, text >=1.1 && <1.2, directory >=1.2 && <1.3, time, random, bytestring, exceptions >=0.6, old-locale, process
+--  -- hs-source-dirs:      
+--  build-tools:         alex, happy
+--  default-language:    Haskell2010
+--  ghc-options:	       -rtsopts -O2
+--  ghc-prof-options:    -auto-all
+
+
+--  see http://haskell.org/cabal/users-guide/

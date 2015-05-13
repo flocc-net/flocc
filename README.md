@@ -3,7 +3,7 @@ Flocc (Functional language on compute clusters) compiler prototype.
 
 Web: http://www.flocc.net/
 Author: Tristan Aubrey-Jones 2010
-Email: developer@flocc.net
+Email: developer at flocc dot net
 
 This code is a experimental prototype compiler for a data-parallel
 programming language called Flocc, which stands for "Functional
